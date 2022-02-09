@@ -1,0 +1,76 @@
+to this project you will need the restful api project and user management project
+on github.com/Mattx-br you have CRUD-user and Restful to use 
+
+to download css(bower)
+$npm install -g bower
+
+after install globally (-g) install on the project
+$ bower install
+
+resftul project will be the server and the client-server will be the client, to access the server throw the client you will need to turn on both
+
+Creating a express application
+$ express --ejs client-server
+
+installing Restfy, a node webServices
+$ npm install restify-clients --save
+
+==============================
+
+Course by Udemy
+
+on this section of the course some terminal commands were used:
+open a Js file
+$ node <file>
+$ nodemon <file>
+
+start npm creating a package.json file 
+$ npm init
+
+installing express module
+$ npm install express --save
+
+installing globally an module to read the code and auto-updating the server
+$ npm install nodemon -g 
+
+installing consign module
+$ npm install consign --save
+
+Install Postman (https://www.postman.com/)
+
+Installing body parser to read json post responses on postman 
+$ npm install body-parser --save
+
+Installing NeDB 
+=======
+Course by Udemy
+
+on this section of the course some terminal commands were used:
+open a Js file
+$ node <file>
+$ nodemon <file>
+
+start npm creating a package.json file 
+$ npm init
+
+installing express module
+$ npm install express@4.16.3 --save
+
+installing globally an module to read the code and auto-updating the server
+$ npm install nodemon -g 
+
+installing consign module
+$ npm install consign --save
+
+Install Postman (https://www.postman.com/)
+
+Installing body parser to read json post responses on postman 
+$ npm install body-parser --save
+
+Installing NeDB 
+
+$ npm install nedb --save
+
+Installing express-validator
+
+$ npm install express-validator@5.3.0 --save
