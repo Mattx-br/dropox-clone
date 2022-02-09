@@ -36,6 +36,7 @@ class DropBoxController {
 
                 ajax.onload = event => {
                     try {
+                        console.log(ajax.responseText);
                         resolve(JSON.parse(ajax.responseText))
                     } catch (e) {
                         reject(e);

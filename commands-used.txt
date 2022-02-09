@@ -1,5 +1,5 @@
-to this project you will need the restful api project and user management project
-on github.com/Mattx-br you have CRUD-user and Restful to use 
+start project
+$ npm start
 
 to download css(bower)
 $npm install -g bower
