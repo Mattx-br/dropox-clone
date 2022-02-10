@@ -1,3 +1,7 @@
+website for git emojis for commits
+
+https://gitmoji.dev/
+
 start project
 $ npm start
 
@@ -74,3 +78,7 @@ $ npm install nedb --save
 Installing express-validator
 
 $ npm install express-validator@5.3.0 --save
+
+Installing formidable a node.js module for parsing form data, especially file uploads.
+
+$ npm install formidable --save
