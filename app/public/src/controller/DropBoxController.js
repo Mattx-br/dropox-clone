@@ -324,6 +324,8 @@ class DropBoxController {
             ${this.getFileIconView(file)}
             <div class="name text-center">${file.originalFilename}</div>
         `;
+
+        this.initEventsLi(li);
         return li;
 
     }
@@ -340,6 +342,15 @@ class DropBoxController {
                 this.listFileEl.appendChild(this.getFileView(data, key));
 
             });
+        });
+    }
+
+    initEventsLi(element) {
+
+        element.addEventListener('click', e => {
+
+            element.classList.toggle('selected');
+
         });
     }
 }
