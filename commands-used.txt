@@ -93,6 +93,6 @@ Using firebase on project
 - Iniciate test mode
 - Go back to project overview
 - Click on Add Firebase to your web application
-$ npm install firebases
+$ npm install firebase@4.13.0 --save
 - Copy the <script> on the top of all <script> tag of the HTML file
 - 

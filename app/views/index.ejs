@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, transform-origin: 0 0">
     <meta name="description" content="">
     <meta name="author" content="Hcode Treinamentos">
 
@@ -212,12 +212,14 @@
             </div>
         </div>
     </div>
-    <script type="module">
 
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-app.js"; const firebaseConfig = { apiKey: "AIzaSyDZh3iR5QJ0X9EfFhG_ParC2y_hHeSiVnc", authDomain: "dropbox-clone-29eb6.firebaseapp.com", projectId: "dropbox-clone-29eb6",
-        storageBucket: "dropbox-clone-29eb6.appspot.com", messagingSenderId: "682958884785", appId: "1:682958884785:web:81a0fc3a85e9d2c791f790" }; const app = initializeApp(firebaseConfig);
-    </script>
+    <!-- <script type="module">
+        import {firebase} from 'https://www.gstatic.com/firebasejs/9.6.6/firebase.js'; import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-app.js"; const firebaseConfig = { apiKey: "AIzaSyDZh3iR5QJ0X9EfFhG_ParC2y_hHeSiVnc", authDomain:
+        "dropbox-clone-29eb6.firebaseapp.com", databaseURL: "https://dropbox-clone-29eb6-default-rtdb.firebaseio.com", projectId: "dropbox-clone-29eb6", storageBucket: "dropbox-clone-29eb6.appspot.com", messagingSenderId: "682958884785", appId: "1:682958884785:web:81a0fc3a85e9d2c791f790"
+        }; const app = initializeApp(firebaseConfig); export {app, firebaseConfig };
+    </script> -->
 
+    <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
     <script src="/src/controller/DropBoxController.js"></script>
     <script src="/src/index.js"></script>
 
