@@ -3,7 +3,12 @@ class DropBoxController {
         this.btnSendFileEl = document.querySelector('#btn-send-file');
         this.inputFilesEl = document.querySelector('#files');
         this.snakeModalEl = document.querySelector('#react-snackbar-root');
+        this.progresBarEl = this.snakeModalEl.querySelector('.mc-progress-bar-fg');
+        this.nameFileEl = this.snakeModalEl.querySelector('.filename');
+        this.timeLeftEl = this.snakeModalEl.querySelector('.timeleft');
+
         this.initEvents();
+
     }
 
     initEvents() {
@@ -19,8 +24,14 @@ class DropBoxController {
 
             this.uploadTask(event.target.files);
 
-            this.snakeModalEl.style.display = 'block';
-        })
+            this.modalShow();
+
+            this.inputFilesEl.value = '';
+        });
+    }
+
+    modalShow(show = true) {
+        this.snakeModalEl.style.display = show ? 'block' : 'none';
     }
 
     uploadTask(files) {
@@ -35,6 +46,9 @@ class DropBoxController {
                 ajax.open('POST', '/upload');
 
                 ajax.onload = event => {
+
+                    this.modalShow(false);
+
                     try {
                         console.log(ajax.responseText);
                         resolve(JSON.parse(ajax.responseText))
@@ -44,14 +58,20 @@ class DropBoxController {
                 }
 
                 ajax.onerror = event => {
-
+                    this.modalShow(false);
                     reject(event);
 
                 }
 
+                ajax.upload.onprogress = event => {
+                    this.uploadProgress(event, file);
+                };
+
                 let formData = new FormData();
 
                 formData.append('input-file', file);
+
+                this.startUploadTime = Date.now();
 
                 ajax.send(formData);
 
@@ -61,5 +81,34 @@ class DropBoxController {
 
         return Promise.all(promises);
 
+    }
+    uploadProgress(event, file) {
+        let timespent = Date.now() - this.startUploadTime;
+        let loaded = event.loaded;
+        let total = event.total;
+        let porcent = parseInt((loaded / total) * 100);
+        let timeleft = ((100 - porcent) * timespent) / porcent;
+        this.progresBarEl.style.width = `${porcent}%`;
+
+        this.nameFileEl.innerHTML = file.name;
+        this.timeLeftEl.innerHTML = this.formatTime(timeleft);
+
+    };
+
+    formatTime(duration) {
+        let seconds = parseInt((duration / 100) % 60);
+        let minutes = parseInt((duration / (100 * 60)) % 60);
+        let hours = parseInt((duration / (100 * 60 * 60)) % 24);
+
+        if (hours > 0) {
+            return `${hours} hour(s), ${minutes} minute(s) and ${seconds} second(s)`;
+        }
+        if (minutes > 0) {
+            return `${minutes} minute(s) and ${seconds} second(s)`;
+        }
+        if (seconds > 0) {
+            return `${seconds} second(s)`;
+        }
+        return '';
     }
 }
