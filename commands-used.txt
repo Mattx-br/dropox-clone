@@ -82,3 +82,17 @@ $ npm install express-validator@5.3.0 --save
 Installing formidable a node.js module for parsing form data, especially file uploads.
 
 $ npm install formidable --save
+
+Using firebase on project
+- Create an account
+- Go to console
+- Create a new project
+- Develop
+- database
+- Realtime database
+- Iniciate test mode
+- Go back to project overview
+- Click on Add Firebase to your web application
+$ npm install firebases
+- Copy the <script> on the top of all <script> tag of the HTML file
+- 
