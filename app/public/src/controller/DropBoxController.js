@@ -11,7 +11,7 @@ class DropBoxController {
         this.nameFileEl = this.snakeModalEl.querySelector('.filename');
         this.timeLeftEl = this.snakeModalEl.querySelector('.timeleft');
 
-        this.connectFirebase();
+
         this.initEvents();
 
     }
@@ -31,9 +31,16 @@ class DropBoxController {
 
         this.inputFilesEl.addEventListener('change', event => {
 
-            console.log(event.target.files);
+            this.uploadTask(event.target.files).then(responses => {
+                responses.forEach(resp => {
 
-            this.uploadTask(event.target.files);
+                    console.log(resp.files['input-files']);
+
+                });
+
+                this.modalShow(false);
+
+            });
 
             this.modalShow();
 
@@ -58,10 +65,7 @@ class DropBoxController {
 
                 ajax.onload = event => {
 
-                    this.modalShow(false);
-
                     try {
-                        console.log(ajax.responseText);
                         resolve(JSON.parse(ajax.responseText))
                     } catch (e) {
                         reject(e);
@@ -69,7 +73,6 @@ class DropBoxController {
                 }
 
                 ajax.onerror = event => {
-                    this.modalShow(false);
                     reject(event);
 
                 }
