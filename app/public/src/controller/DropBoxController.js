@@ -10,9 +10,11 @@ class DropBoxController {
         this.progresBarEl = this.snakeModalEl.querySelector('.mc-progress-bar-fg');
         this.nameFileEl = this.snakeModalEl.querySelector('.filename');
         this.timeLeftEl = this.snakeModalEl.querySelector('.timeleft');
+        this.listFileEl = document.querySelector('#list-of-files-and-directories');
 
         this.connectFirebase();
         this.initEvents();
+        this.readFiles();
 
     }
 
@@ -150,7 +152,7 @@ class DropBoxController {
     }
 
     getFileIconView(file) {
-        switch (file.type) {
+        switch (file.mimetype) {
             case 'folder':
                 return `<svg width="160" height="160" viewBox="0 0 160 160" class="mc-icon-template-content tile__preview tile__preview--icon">
         <title>content-folder-large</title>
@@ -313,17 +315,31 @@ class DropBoxController {
         }
     }
 
-    getFileView(file) {
+    getFileView(file, key) {
 
-        return `
-<li>
-    ${this.getFileIconView(file)}
-    <div class="name text-center">${file.name}</div>
-</li>
-`;
+        let li = document.createElement('li');
+        li.dataset.key = key;
+
+        li.innerHTML = `
+            ${this.getFileIconView(file)}
+            <div class="name text-center">${file.originalFilename}</div>
+        `;
+        return li;
+
     }
 
+    readFiles() {
+        this.getFirebaseRef().on('value', snapshot => {
 
+            this.listFileEl.innerHTML = '';
+
+            snapshot.forEach(snapshotItem => {
+                let key = snapshotItem.key;
+                let data = snapshotItem.val();
+                console.log(data);
+                this.listFileEl.appendChild(this.getFileView(data, key));
+
+            });
+        });
+    }
 }
-// import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-app.js";
-// DropBoxController.prototype.initializeApp = initializeApp;
