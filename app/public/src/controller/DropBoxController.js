@@ -326,6 +326,7 @@ class DropBoxController {
         `;
 
         this.initEventsLi(li);
+
         return li;
 
     }
@@ -338,18 +339,48 @@ class DropBoxController {
             snapshot.forEach(snapshotItem => {
                 let key = snapshotItem.key;
                 let data = snapshotItem.val();
-                console.log(data);
                 this.listFileEl.appendChild(this.getFileView(data, key));
 
             });
         });
     }
 
-    initEventsLi(element) {
+    initEventsLi(li) {
 
-        element.addEventListener('click', e => {
+        li.addEventListener('click', e => {
 
-            element.classList.toggle('selected');
+            if (e.shiftKey) {
+
+                let firstLi = this.listFileEl.querySelector('.selected');
+
+                if (firstLi) {
+                    let indexStart;
+                    let indexEnd;
+                    let ListLi = li.parentElement.childNodes;
+                    ListLi.forEach((el, index) => {
+                        if (firstLi === el) indexStart = index;
+                        if (li === el) indexEnd = index;
+                    });
+
+                    let index = [indexStart, indexEnd].sort();
+
+                    ListLi.forEach((el, i) => {
+
+                        if (i >= index[0] && i <= index[1]) {
+                            el.classList.add('selected');
+                        }
+                    });
+                    return true;
+                }
+            }
+
+            if (!e.ctrlKey) {
+                this.listFileEl.querySelectorAll('li.selected').forEach(li => {
+                    li.classList.remove('selected');
+                });
+            }
+            li.classList.toggle('selected');
+
 
         });
     }
