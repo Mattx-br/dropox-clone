@@ -1,5 +1,8 @@
 class DropBoxController {
     constructor() {
+
+        this.currentFolder = ['batataRoot'];
+
         this.onselectionchange = new Event("selectionchange");
 
         this.btnSendFileEl = document.querySelector("#btn-send-file");
@@ -48,10 +51,6 @@ class DropBoxController {
             formData.append('path', file.path);
             formData.append('key', key);
 
-            console.log(file);
-            console.log(file.key);
-            console.log(file.path);
-
             promises.push(this.ajax('/file', 'DELETE', formData));
 
         });
@@ -60,6 +59,22 @@ class DropBoxController {
     }
 
     initEvents() {
+
+        // Onclick of New file button 
+        this.btnNewFolder.addEventListener('click', e => {
+            let name = prompt('New folder:');
+
+            if (name) {
+                this.getFirebaseRef().push().set({
+                    name,
+                    type: 'folder',
+                    path: this.currentFolder.join('/')
+                })
+            }
+        });
+
+        // Onclick of button Delete 
+
         this.btnDelete.addEventListener("click", (e) => {
             this.removeTask()
                 .then((responses) => {
