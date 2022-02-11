@@ -6,13 +6,21 @@ class DropBoxController {
 
         this.onselectionchange = new Event('selectionchange');
 
-        this.btnSendFileEl = document.querySelector('#btn-send-file');
         this.inputFilesEl = document.querySelector('#files');
+
+        // Progress Bar
         this.snakeModalEl = document.querySelector('#react-snackbar-root');
         this.progresBarEl = this.snakeModalEl.querySelector('.mc-progress-bar-fg');
         this.nameFileEl = this.snakeModalEl.querySelector('.filename');
         this.timeLeftEl = this.snakeModalEl.querySelector('.timeleft');
         this.listFileEl = document.querySelector('#list-of-files-and-directories');
+
+        // Buttons 
+        this.btnSendFileEl = document.querySelector('#btn-send-file');
+        this.btnNewFolder = document.querySelector('#btn-new-folder');
+        this.btnRename = document.querySelector('#btn-rename');
+        this.btnDelete = document.querySelector('#btn-delete');
+
 
         this.connectFirebase();
         this.initEvents();
@@ -34,10 +42,29 @@ class DropBoxController {
         firebase.initializeApp(firebaseConfig);
     }
 
+    getSelection() {
+        let selectedLi = this.listFileEl.querySelectorAll(".selected");
+        return this.listFileEl.querySelectorAll(".selected");
+    }
+
     initEvents() {
 
         this.listFileEl.addEventListener('selectionchange', e => {
-            console.log('selectionchange');
+            switch (this.getSelection().length) {
+                case 0:
+                    this.btnRename.style.display = 'none';
+                    this.btnDelete.style.display = 'none';
+                    break;
+                case 1:
+                    this.btnRename.style.display = 'block';
+                    this.btnDelete.style.display = 'block';
+                    break;
+                default:
+                    this.btnRename.style.display = 'none';
+                    this.btnDelete.style.display = 'block';
+                    break;
+            }
+
         })
 
         this.btnSendFileEl.addEventListener('click', event => {
@@ -356,8 +383,6 @@ class DropBoxController {
 
         li.addEventListener('click', e => {
 
-            this.listFileEl.dispatchEvent(this.onselectionchange);
-
             if (e.shiftKey) {
 
 
@@ -380,6 +405,9 @@ class DropBoxController {
                             el.classList.add('selected');
                         }
                     });
+
+                    this.listFileEl.dispatchEvent(this.onselectionchange);
+
                     return true;
                 }
             }
@@ -391,6 +419,7 @@ class DropBoxController {
             }
             li.classList.toggle('selected');
 
+            this.listFileEl.dispatchEvent(this.onselectionchange);
 
         });
     }
