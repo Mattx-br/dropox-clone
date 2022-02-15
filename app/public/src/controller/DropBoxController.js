@@ -57,7 +57,6 @@ class DropBoxController {
                 if (file.type === 'folder') {
 
                     this.removeFolderTask(this.currentFolder.join('/'), file.name).then(() => {
-
                         resolve({
                             fields: { key }
                         });
@@ -88,14 +87,19 @@ class DropBoxController {
 
             let folderRef = this.getFirebaseRef(ref + '/' + name);
 
+            if (folderRef.off('value') === undefined) {
+                this.removeFolderTask('home', folderRef.path.pieces_[1]).then(() => { return }).catch(() => { return });
+                return resolve();
+            }
+
             folderRef.on('value', snapshot => {
 
                 folderRef.off('value');
 
+
                 snapshot.forEach(item => {
                     let data = item.val();
                     data.key = item.key;
-
                     if (data.type === 'folder') {
 
                         this.removeFolderTask(ref + '/' + name, data.name).then(() => {
